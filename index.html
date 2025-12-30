@@ -3,25 +3,878 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Nanomind</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --slate-950: #020617;
+      --sky-400: #38bdf8;
+      --sky-500: #0ea5e9;
+      --sky-600: #0284c7;
+      --violet-400: #a78bfa;
+      --violet-500: #8b5cf6;
+      --pink-400: #f472b6;
+      --pink-500: #ec4899;
+      --emerald-500: #10b981;
+    }
+
     body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--slate-950);
+      color: var(--slate-200);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, var(--slate-950), transparent);
+      pointer-events: none;
+    }
+
+    nav > div {
+      pointer-events: auto;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-brand svg {
+      color: var(--sky-400);
+      width: 20px;
+      height: 20px;
+    }
+
+    .nav-brand span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: bold;
+      font-size: 1.125rem;
+      letter-spacing: 0.05em;
+      color: var(--slate-100);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--slate-400);
+    }
+
+    .nav-links a {
+      color: var(--slate-400);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--sky-400);
+    }
+
+    /* Main Content */
+    main {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #000;
-      color: #fff;
-      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding-top: 5rem;
+      padding-bottom: 2.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
-    img { width: 120px; margin-bottom: 2rem; }
-    p { font-size: 1.25rem; letter-spacing: 0.05em; text-align: center; }
+
+    /* Background Gradients */
+    .bg-gradients {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-gradient-1 {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 40%;
+      height: 40%;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+
+    .bg-gradient-2 {
+      position: absolute;
+      bottom: 10%;
+      right: -5%;
+      width: 30%;
+      height: 30%;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    /* Logo Container */
+    .logo-container {
+      z-index: 10;
+      margin-bottom: 3rem;
+      transform: scale(1.25);
+    }
+
+    @media (min-width: 768px) {
+      .logo-container {
+        transform: scale(1.5);
+      }
+    }
+
+    /* Typography */
+    .hero-text {
+      z-index: 10;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero-title {
+      font-size: 3.75rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: bold;
+      letter-spacing: -0.025em;
+      background: linear-gradient(to right, var(--slate-100), var(--slate-300), var(--slate-500));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 1.5s forwards;
+    }
+
+    .hero-title .highlight {
+      color: var(--slate-100);
+      -webkit-text-fill-color: var(--slate-100);
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 5rem;
+      }
+    }
+
+    .hero-subtitle {
+      color: var(--slate-400);
+      font-size: 1.125rem;
+      max-width: 32rem;
+      margin: 0 auto;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 2s forwards;
+    }
+
+    @media (min-width: 768px) {
+      .hero-subtitle {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* Info Panel */
+    .info-panel-container {
+      z-index: 10;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    .info-panel {
+      height: 12rem;
+      width: 100%;
+      max-width: 28rem;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .info-panel-content {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--slate-700);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .info-panel-content.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .info-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .info-panel-title {
+      font-size: 1.25rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: bold;
+    }
+
+    .info-panel-icon {
+      padding: 0.5rem;
+      border-radius: 50%;
+      background: rgba(51, 65, 85, 0.5);
+    }
+
+    .info-panel-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .info-panel-description {
+      color: var(--slate-300);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      line-height: 1.625;
+    }
+
+    .info-panel-sequence {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-family: monospace;
+    }
+
+    .info-panel-sequence-label {
+      color: var(--slate-500);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .info-panel-sequence-value {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      background: rgba(15, 23, 42, 0.8);
+      color: white;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--slate-700);
+    }
+
+    .info-panel-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--slate-500);
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    .info-panel-empty.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .info-panel-empty p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--slate-600);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 2.5s forwards, bounce 2s ease-in-out infinite 2.5s;
+    }
+
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* SVG Logo */
+    .nanomind-logo {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nanomind-logo svg {
+      overflow: visible;
+    }
+
+    .logo-path {
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      cursor: pointer;
+      transition: opacity 0.3s, stroke-width 0.3s, filter 0.3s;
+    }
+
+    .logo-path.highlighted {
+      filter: url(#glow-cdr1) url(#glow-cdr2) url(#glow-cdr3);
+    }
+
+    .logo-node {
+      fill: var(--slate-500);
+      animation: scaleIn 0.3s ease-out forwards;
+    }
+
+    /* Content Section */
+    .content-section {
+      background: var(--slate-900);
+      padding: 6rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .content-section {
+        padding: 6rem 5rem;
+      }
+    }
+
+    .content-grid {
+      max-width: 56rem;
+      margin: 0 auto;
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (min-width: 768px) {
+      .content-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .content-title {
+      font-size: 1.875rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: bold;
+      color: var(--slate-100);
+      margin-bottom: 1.5rem;
+    }
+
+    .content-text {
+      color: var(--slate-400);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .content-button {
+      padding: 0.75rem 1.5rem;
+      background: var(--sky-600);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.2);
+    }
+
+    .content-button:hover {
+      background: var(--sky-500);
+    }
+
+    .content-visualization {
+      position: relative;
+      height: 16rem;
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 1rem;
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visualization-bars {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    .visualization-bar {
+      width: 0.75rem;
+      border-radius: 9999px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .visualization-bar:nth-child(1) {
+      height: 4rem;
+      background: rgba(14, 165, 233, 0.2);
+      animation-delay: 0s;
+    }
+
+    .visualization-bar:nth-child(2) {
+      height: 6rem;
+      background: rgba(139, 92, 246, 0.2);
+      animation-delay: 0.2s;
+    }
+
+    .visualization-bar:nth-child(3) {
+      height: 3rem;
+      background: rgba(236, 72, 153, 0.2);
+      animation-delay: 0.4s;
+    }
+
+    .visualization-bar:nth-child(4) {
+      height: 5rem;
+      background: rgba(16, 185, 129, 0.2);
+      animation-delay: 0.6s;
+    }
+
+    .visualization-label {
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: var(--slate-500);
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--slate-900);
+      text-align: center;
+      color: var(--slate-600);
+      font-size: 0.875rem;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--slate-600);
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .footer-icon:hover {
+      color: var(--slate-400);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes drawPath {
+      from {
+        stroke-dashoffset: 1000;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Selection */
+    ::selection {
+      background: rgba(14, 165, 233, 0.3);
+    }
   </style>
 </head>
 <body>
-  <img src="logo_M_nanomind.png" alt="Nanomind">
-  <p>Generative Biologics Designed by Intelligence</p>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44L2 10" />
+        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44L22 10" />
+      </svg>
+      <span>NANOMIND</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Science</a>
+      <a href="#">Platform</a>
+      <a href="#">About</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main>
+    <!-- Background Gradients -->
+    <div class="bg-gradients">
+      <div class="bg-gradient-1"></div>
+      <div class="bg-gradient-2"></div>
+    </div>
+
+    <!-- Logo Container -->
+    <div class="logo-container">
+      <div class="nanomind-logo" id="nanomind-logo">
+        <svg width="300" height="220" viewBox="0 0 300 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="glow-cdr1" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <filter id="glow-cdr2" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <filter id="glow-cdr3" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- CDR1 - Left Arch -->
+          <path
+            id="path-cdr1"
+            d="M 40 180 C 40 180, 40 100, 40 80 C 40 40, 80 40, 100 80"
+            stroke="#38bdf8"
+            stroke-width="18"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+            class="logo-path"
+          />
+
+          <!-- CDR2 - Middle Valley -->
+          <path
+            id="path-cdr2"
+            d="M 100 80 C 120 120, 130 180, 150 180 C 170 180, 180 120, 200 80"
+            stroke="#a78bfa"
+            stroke-width="18"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+            class="logo-path"
+          />
+
+          <!-- CDR3 - Right Arch -->
+          <path
+            id="path-cdr3"
+            d="M 200 80 C 220 40, 260 40, 260 80 C 260 100, 260 180, 260 180"
+            stroke="#f472b6"
+            stroke-width="18"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+            class="logo-path"
+          />
+
+          <!-- Decorative Nodes -->
+          <circle cx="40" cy="180" r="6" fill="#64748b" class="logo-node" style="animation-delay: 0.2s" />
+          <circle cx="260" cy="180" r="6" fill="#64748b" class="logo-node" style="animation-delay: 1.8s" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Typography Text -->
+    <div class="hero-text">
+      <h1 class="hero-title">
+        nano<span class="highlight">mind</span>
+      </h1>
+      <p class="hero-subtitle">
+        Generative biologics designed by intelligence.
+      </p>
+    </div>
+
+    <!-- Interactive Info Panel -->
+    <div class="info-panel-container">
+      <div class="info-panel">
+        <div class="info-panel-empty" id="info-panel-empty">
+          <p>Hover over the Nanomind logo to inspect structure</p>
+        </div>
+        <div class="info-panel-content" id="info-panel-content">
+          <div class="info-panel-header">
+            <h3 class="info-panel-title" id="info-panel-title"></h3>
+            <div class="info-panel-icon" id="info-panel-icon"></div>
+          </div>
+          <p class="info-panel-description" id="info-panel-description"></p>
+          <div class="info-panel-sequence">
+            <span class="info-panel-sequence-label">Sequence</span>
+            <span class="info-panel-sequence-value" id="info-panel-sequence"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </div>
+  </main>
+
+  <!-- Content Section -->
+  <section class="content-section">
+    <div class="content-grid">
+      <div>
+        <h2 class="content-title">Structural Intelligence</h2>
+        <p class="content-text">
+          Nanomind leverages deep generative models to engineer single-domain antibodies with unprecedented binding affinity. Our platform treats protein structures not just as biology, but as programmable geometry.
+        </p>
+        <button class="content-button">Explore the Technology</button>
+      </div>
+      <div class="content-visualization">
+        <div class="text-center">
+          <div class="visualization-bars">
+            <div class="visualization-bar"></div>
+            <div class="visualization-bar"></div>
+            <div class="visualization-bar"></div>
+            <div class="visualization-bar"></div>
+          </div>
+          <span class="visualization-label">VHH SEQUENCE OPTIMIZATION</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-icons">
+      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+      </svg>
+      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5 2.5 9.6 5 7c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+      </svg>
+    </div>
+    <p>&copy; <span id="current-year"></span> Nanomind Inc. All structures reserved.</p>
+  </footer>
+
+  <script>
+    // CDR Data
+    const cdrDetails = {
+      cdr1: {
+        id: 'cdr1',
+        name: 'CDR1 (N-Terminal)',
+        color: '#38bdf8',
+        description: 'The first complementarity-determining region. Often plays a structural role in orienting the paratope.',
+        sequence: 'GFTFSSY',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44L2 10" />
+          <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44L22 10" />
+        </svg>`
+      },
+      cdr2: {
+        id: 'cdr2',
+        name: 'CDR2 (Core Loop)',
+        color: '#a78bfa',
+        description: 'Bridging the variable domain beta-strands. In nanobodies, this region is often extended to access hidden epitopes.',
+        sequence: 'ISGSGGST',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>`
+      },
+      cdr3: {
+        id: 'cdr3',
+        name: 'CDR3 (Hypervariable)',
+        color: '#f472b6',
+        description: 'The most diverse loop, responsible for the majority of specific antigen binding interactions.',
+        sequence: 'AKDVGLAG',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </svg>`
+      }
+    };
+
+    // DOM Elements
+    const paths = {
+      cdr1: document.getElementById('path-cdr1'),
+      cdr2: document.getElementById('path-cdr2'),
+      cdr3: document.getElementById('path-cdr3')
+    };
+
+    const infoPanelContent = document.getElementById('info-panel-content');
+    const infoPanelEmpty = document.getElementById('info-panel-empty');
+    const infoPanelTitle = document.getElementById('info-panel-title');
+    const infoPanelDescription = document.getElementById('info-panel-description');
+    const infoPanelSequence = document.getElementById('info-panel-sequence');
+    const infoPanelIcon = document.getElementById('info-panel-icon');
+
+    let activeCDR = null;
+
+    // Animate SVG paths on load
+    function animatePaths() {
+      Object.keys(paths).forEach((cdrId, index) => {
+        const path = paths[cdrId];
+        const pathLength = path.getTotalLength();
+        path.style.strokeDasharray = pathLength;
+        path.style.strokeDashoffset = pathLength;
+        path.style.opacity = '0';
+        
+        setTimeout(() => {
+          path.style.transition = `stroke-dashoffset 1.5s ease-in-out, opacity 1.5s ease-in-out`;
+          path.style.strokeDashoffset = '0';
+          path.style.opacity = '1';
+        }, index * 500);
+      });
+    }
+
+    // Update info panel
+    function updateInfoPanel(cdrId) {
+      if (!cdrId) {
+        infoPanelContent.classList.remove('active');
+        infoPanelEmpty.classList.remove('hidden');
+        return;
+      }
+
+      const data = cdrDetails[cdrId];
+      if (!data) return;
+
+      infoPanelTitle.textContent = data.name;
+      infoPanelTitle.style.color = data.color;
+      infoPanelDescription.textContent = data.description;
+      infoPanelSequence.textContent = data.sequence;
+      infoPanelIcon.innerHTML = data.icon;
+
+      infoPanelEmpty.classList.add('hidden');
+      setTimeout(() => {
+        infoPanelContent.classList.add('active');
+      }, 10);
+    }
+
+    // Handle CDR hover
+    function handleCDRHover(cdrId) {
+      activeCDR = cdrId;
+      
+      // Update path styles
+      Object.keys(paths).forEach(id => {
+        const path = paths[id];
+        if (id === cdrId) {
+          path.style.opacity = '1';
+          path.style.strokeWidth = '22';
+          path.style.filter = `url(#glow-${id})`;
+        } else {
+          path.style.opacity = '0.3';
+          path.style.strokeWidth = '18';
+          path.style.filter = 'none';
+        }
+      });
+
+      updateInfoPanel(cdrId);
+    }
+
+    function handleCDRLeave() {
+      activeCDR = null;
+      
+      Object.keys(paths).forEach(id => {
+        const path = paths[id];
+        path.style.opacity = '1';
+        path.style.strokeWidth = '18';
+        path.style.filter = 'none';
+      });
+
+      updateInfoPanel(null);
+    }
+
+    // Attach event listeners
+    Object.keys(paths).forEach(cdrId => {
+      const path = paths[cdrId];
+      path.addEventListener('mouseenter', () => handleCDRHover(cdrId));
+      path.addEventListener('mouseleave', handleCDRLeave);
+    });
+
+    // Set current year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Initialize animations
+    animatePaths();
+  </script>
 </body>
 </html>
